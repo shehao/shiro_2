@@ -41,4 +41,5 @@ public class ShiroRealm extends AuthorizingRealm {
         }
         return new SimpleAuthenticationInfo(username,token.getPassword(),ShiroRealm.class.getName());
     }
+    //如何将
 }
