@@ -2,10 +2,15 @@ package com.hx.realms;
 
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @Author: shehao
@@ -20,7 +25,14 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        return null;
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        Set roleSet=new HashSet();
+        roleSet.add("admin");
+        roleSet.add("user");
+        simpleAuthorizationInfo.setRoles(roleSet);
+        // principals.
+        System.out.println("ShiroRealm==============================doGetAuthorizationInfo");
+        return simpleAuthorizationInfo;
     }
 
     /**
@@ -31,6 +43,7 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        System.out.println("==========================ShiroRealm");
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String username = token.getUsername();
         //尽心加密计算时一定不能调用toString();
