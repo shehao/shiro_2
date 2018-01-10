@@ -19,7 +19,18 @@
              ========================================================= -->
         <!-- Shiro's main business-tier object for web-enabled applications
              (use DefaultSecurityManager instead when there is no web environment)-->
-    <bean id="shiroRealm" class="com.hx.realms.ShiroRealm"></bean>
+    <bean id="shiroRealm" class="com.hx.realms.ShiroRealm">
+        <!--对用户输入的密码进行加密-->
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <!--加密算法-->
+                <property name="hashAlgorithmName" value="MD5"/>
+                <!--加密次数-->
+                <property name="hashIterations" value="1024"></property>
+             </bean>
+        </property>
+
+    </bean>
     <!--
         1.配置securityManager
     -->
