@@ -2,8 +2,10 @@ package com.hx.realms;
 
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 
 /**
  * @Author: shehao
@@ -31,6 +33,9 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String username = token.getUsername();
+        //尽心加密计算时一定不能调用toString();
+        Object password=token.getPassword();
+        //Object password=token.getPassword().toString();
         //根据用户名进行查找用户的信息
         System.out.println("用户信息--------------"+username);
         if("unkonwn".equals(username)){
@@ -39,7 +44,24 @@ public class ShiroRealm extends AuthorizingRealm {
         }else if ("monster".equals(username)){
             throw new LockedAccountException("账号被锁定");
         }
-        return new SimpleAuthenticationInfo(username,token.getPassword(),ShiroRealm.class.getName());
+        //将用户的账号作为盐进行加密计算
+        ByteSource credentialsSalt=ByteSource.Util.bytes(username);
+        //使用MD5方式进行对密码进行加密 盐值为账号username 加密次数1024次和shiro.xml中配置的加密次数一样
+        SimpleHash simpleHash = new SimpleHash("MD5", password, credentialsSalt, 1024);
+        //SimpleAuthenticationInfo(Object principal, Object hashedCredentials, ByteSource credentialsSalt, String realmName)
+        return new SimpleAuthenticationInfo(username,simpleHash.toHex(),credentialsSalt,ShiroRealm.class.getName());
     }
-    //如何将
+
+    public static void main(String[] args) {
+        String hashAlgorithmName = "MD5";
+        SimpleHash simpleHash = new SimpleHash(hashAlgorithmName, "123", null, 1024);
+        String s = simpleHash.toHex();
+        System.out.println(s);
+        int len = 3;
+        int i = 3 & 5;
+        System.out.println(i);
+        if((len & 1) != 0) {}
+        System.out.println("sueec");
+        // String
+    }
 }
