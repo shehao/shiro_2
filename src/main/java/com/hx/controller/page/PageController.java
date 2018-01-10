@@ -32,6 +32,11 @@ public class PageController {
         logger.info("token:{}",token.hashCode());
         try{
             subject.login(token);
+            if(subject.hasRole("admin")){
+
+            }else if (subject.isPermitted("add")){
+
+            }
             logger.info(username+":"+password+"授权成功:{},{}",username,password);
             return "redirect:/success.jsp";
         }catch (AuthenticationException e){
