@@ -36,6 +36,7 @@ public class PageController {
         logger.info("username----password:{},{}",username,password);
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token= new UsernamePasswordToken(username,password);
+        token.setRememberMe(true);
         logger.info("token:{}",token.hashCode());
         try{
             subject.login(token);

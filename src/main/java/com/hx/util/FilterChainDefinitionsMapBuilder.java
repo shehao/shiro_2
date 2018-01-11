@@ -14,6 +14,7 @@ public class FilterChainDefinitionsMapBuilder {
         hashMap.put("/login.jsp","anon");
         hashMap.put(" /admin/checkLogin","anon");
         hashMap.put("/admin.jsp","roles[admin]");
+        hashMap.put("/success.jsp","user,roles[admin]");
         return hashMap;
     }
 }

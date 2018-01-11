@@ -86,8 +86,8 @@
                     <ref bean="shiroRealm"></ref>
                     <ref bean="secondRealm"></ref>
                 </list>
-
             </property>
+            <property name="rememberMeManager" value="10"></property>
         </bean>
 
         <!-- Let's use some enterprise caching support for better performance.  You can replace this with any enterprise
@@ -153,6 +153,18 @@
     -->
     <bean id="filterChainDefinitionsMap" factory-bean="filterChainDefinitionsMapBuilder" factory-method="buildFilterChainDefinitionsMap"></bean>
     <bean id="filterChainDefinitionsMapBuilder" class="com.hx.util.FilterChainDefinitionsMapBuilder"></bean>
+
+
+    <!--
+        sessindao的配置
+    -->
+
+
+
+
+
+
+
 
 
     <bean id="shiroService" class="com.hx.services.ShiroService"></bean>
