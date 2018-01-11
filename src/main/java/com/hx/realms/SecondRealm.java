@@ -26,7 +26,7 @@ public class SecondRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         Set roleSet=new HashSet();
-        roleSet.add("admin");
+        roleSet.add("user");
         simpleAuthorizationInfo.setRoles(roleSet);
         System.out.println("SecondRealm==============================doGetAuthorizationInfo");
         return simpleAuthorizationInfo;

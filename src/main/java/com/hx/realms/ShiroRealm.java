@@ -25,10 +25,14 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        //从PrincipalCollection获取userinfo的信息
+        Object primaryPrincipal = principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         Set roleSet=new HashSet();
-        roleSet.add("admin");
         roleSet.add("user");
+        if("admin".equals(primaryPrincipal)){
+            roleSet.add("admin");
+        }
         simpleAuthorizationInfo.setRoles(roleSet);
         // principals.
         System.out.println("ShiroRealm==============================doGetAuthorizationInfo");
