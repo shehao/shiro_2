@@ -13,6 +13,13 @@
 		http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 		http://www.springframework.org/schema/tx
 		http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+    <!--扫包-->
+    <context:component-scan base-package="com.hx.mapper"></context:component-scan>
+    <!--数据源-->
+    <!--sqlsessionFactory-->
+    <!--mapper和数据源映射-->
+    <!--事物trancationmanager-->
+    <!--声明式事物-->
 
 
 </beans>
